@@ -37,7 +37,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Montserrat', sans-serif;
     font-size: 4rem;
     font-weight: bold;
     margin-top: 20px;
@@ -50,13 +49,12 @@ body {
 }
 
 .ano .troca {
-    position: relative;
     color: #ff6f61;
     animation: sobe-balao 6s ease-in-out forwards;
 }
 
 .ano .fixo {
-    margin-left: -30px; /* Aproxima o número */
+    margin-left: -30px;
     opacity: 0;
     animation: aparece-5 6s ease-in-out forwards;
     color: #ffcc00;
@@ -75,22 +73,50 @@ body {
     animation: sobe-balao 6s ease-in-out forwards;
 }
 
-.ano .balao:after {
-    content: '';
+/* Cordão do balão */
+.cordao {
     position: absolute;
-    bottom: -120px;
-    left: 50%;
-    width: 80px;
+    width: 3px;
     height: 120px;
-    background: transparent;
-    border-radius: 50%;
-    border: 2px solid #fff;
-    border-top: none;
-    border-right: none;
-    transform: translateX(-50%) rotate(-45deg);
+    background: linear-gradient(to bottom, #ff6f61 10%, #ffcc00 90%);
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-/* Animações do ano */
+/* Fogos */
+.fogos {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.explosao {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    background: transparent;
+    border-radius: 50%;
+    animation: explodir 3s ease-in-out infinite;
+}
+
+.explosao:before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, #ffcc00, #ff6f61, transparent);
+    border-radius: 50%;
+    animation: expandir 1s ease-in-out infinite;
+}
+
+/* Animações */
 @keyframes sobe-balao {
     0% {
         transform: translateY(100%);
@@ -118,67 +144,6 @@ body {
     }
 }
 
-/* Fogos */
-.fogos {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    pointer-events: none;
-}
-
-.explosao {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 10px;
-    height: 10px;
-    background: transparent;
-    border-radius: 50%;
-    animation: explodir 3s ease-in-out infinite;
-}
-
-.explosao:nth-child(1) {
-    animation-delay: 0.3s;
-    left: 30%;
-}
-
-.explosao:nth-child(2) {
-    animation-delay: 0.6s;
-    left: 50%;
-}
-
-.explosao:nth-child(3) {
-    animation-delay: 0.9s;
-    left: 70%;
-}
-
-/* Cores das explosões */
-.explosao:before, .explosao:after {
-    content: '';
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background: radial-gradient(circle, #ffcc00, #ff6f61, transparent);
-    border-radius: 50%;
-    animation: expandir 1s ease-in-out infinite;
-}
-
-.explosao:before {
-    top: -30px;
-    left: -30px;
-    animation-delay: 0.2s;
-}
-
-.explosao:after {
-    top: 30px;
-    left: 30px;
-    animation-delay: 0.4s;
-}
-
-/* Animações dos fogos */
 @keyframes explodir {
     0% {
         transform: translateY(0);
@@ -211,7 +176,7 @@ body {
 
 /* Responsividade */
 @media (max-width: 768px) {
-    .mensagem h3 {
+    .mensagem h1 {
         font-size: 2rem;
     }
 
@@ -223,88 +188,58 @@ body {
         font-size: 3rem;
     }
 }
-/* CSS para fogos de artifício */
-
-.fogos {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    pointer-events: none;
-}
-
-.explosao {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 10px;
-    height: 10px;
-    background: transparent;
+.ano .balao {
+    width: 80px;
+    height: 100px;
+    background: radial-gradient(circle at 40% 40%, #ff6f61, #e63946);
     border-radius: 50%;
-    animation: explodir 2s ease-in-out forwards;
+    position: absolute;
+    top: 50%;
+    left: calc(50% - 40px);
+    box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.3);
+    transform: translateY(100%);
+    animation: sobe-balao 6s ease-in-out forwards;
 }
 
-.explosao:before {
+/* Cordão do balão */
+.ano .balao::before {
     content: '';
     position: absolute;
-    width: 10px;
-    height: 10px;
-    background: radial-gradient(circle, #ffcc00, #ff6f61, transparent);
-    border-radius: 50%;
-    animation: expandir 1s ease-in-out forwards;
+    width: 2px;
+    height: 120px;
+    background: linear-gradient(to bottom, #ff6f61 10%, #ffcc00 90%);
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    transform-origin: top center;
+    animation: sway 2s ease-in-out infinite;
 }
 
-/* Faíscas após explosão */
-.faísca {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: radial-gradient(circle, #ff6f61, transparent);
-    border-radius: 50%;
-    animation: cair 3s linear forwards;
-    opacity: 0;
-}
-
-/* Animações */
-@keyframes explodir {
+/* Animação de balanço do cordão */
+@keyframes sway {
     0% {
-        transform: translateY(0);
-        opacity: 1;
+        transform: translateX(-50%) rotate(-5deg);
     }
     50% {
-        transform: translateY(-50vh);
-        opacity: 1;
+        transform: translateX(-50%) rotate(5deg);
     }
     100% {
-        transform: translateY(-100vh);
-        opacity: 0;
+        transform: translateX(-50%) rotate(-5deg);
     }
 }
 
-@keyframes expandir {
+/* Animação de subida do balão */
+@keyframes sobe-balao {
     0% {
-        opacity: 1;
-        transform: scale(0.5);
-    }
-    50% {
-        opacity: 1;
-        transform: scale(2);
-    }
-    100% {
+        transform: translateY(100%);
         opacity: 0;
-        transform: scale(3);
     }
-}
-
-@keyframes cair {
-    0% {
-        transform: translateY(-50vh);
+    40% {
+        transform: translateY(-50%);
         opacity: 1;
     }
     100% {
-        transform: translateY(100vh);
+        transform: translateY(-200%);
         opacity: 0;
     }
 }
