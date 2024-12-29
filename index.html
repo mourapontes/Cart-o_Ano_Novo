@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fogos de Artifício</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="fogos">
+        <!-- Contêiner para fogos de artifício -->
+    </div>
+
+    <script>
+        const fogosContainer = document.querySelector('.fogos');
+
+        function criarExplosao(x, y) {
+            const explosao = document.createElement('div');
+            explosao.className = 'explosao';
+            explosao.style.left = `${x}px`;
+            explosao.style.bottom = `${y}px`;
+
+            for (let i = 0; i < 50; i++) {
+                const faisca = document.createElement('div');
+                faisca.className = 'faísca';
+                faisca.style.left = `${Math.random() * 200 - 100}px`;
+                faisca.style.top = `${Math.random() * 200 - 100}px`;
+                explosao.appendChild(faisca);
+            }
+
+            fogosContainer.appendChild(explosao);
+
+            setTimeout(() => explosao.remove(), 3000);
+        }
+
+        setInterval(() => {
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight / 2;
+            criarExplosao(x, y);
+        }, 1000);
+    </script>
+</body>
+</html>
